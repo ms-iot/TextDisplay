@@ -25,9 +25,9 @@ namespace TextDisplay
                     var folder = Windows.Storage.ApplicationData.Current.LocalSettings;
                     try
                     {
-                        var playlistFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///TextDisplay/screens.config"));
+                        var configFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///TextDisplay/screens.config"));
 
-                        var xmlString = await FileIO.ReadTextAsync(playlistFile);
+                        var xmlString = await FileIO.ReadTextAsync(configFile);
                         var xml = XElement.Parse(xmlString);
 
                         var screensConfig = xml.Descendants("Screen");
@@ -42,6 +42,7 @@ namespace TextDisplay
                                 ITextDisplay driver = Activator.CreateInstance(type, screenConfig) as ITextDisplay;
                                 if (null != driver)
                                 {
+                                    await driver.InitializeAsync();
                                     displays.Add(driver);
                                 }
                             }
