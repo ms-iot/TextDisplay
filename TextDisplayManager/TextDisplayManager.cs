@@ -42,8 +42,16 @@ namespace TextDisplay
                                 ITextDisplay driver = Activator.CreateInstance(type, screenConfig) as ITextDisplay;
                                 if (null != driver)
                                 {
-                                    await driver.InitializeAsync();
-                                    displays.Add(driver);
+                                    try
+                                    {
+                                        await driver.InitializeAsync();
+                                        displays.Add(driver);
+                                    }
+                                    catch(Exception e)
+                                    {
+                                        Debug.WriteLine("TextDisplayManager: Failed to add driver " + type.ToString());
+                                        Debug.WriteLine("TextDisplayManager: " + e.Message);
+                                    }
                                 }
                             }
                         }
