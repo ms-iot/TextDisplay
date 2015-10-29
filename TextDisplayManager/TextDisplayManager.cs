@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using Windows.Foundation;
 using Windows.Storage;
 
-namespace TextDisplay
+namespace Microsoft.Maker.Devices.TextDisplay
 {
     public static class TextDisplayManager
     {
@@ -28,6 +28,7 @@ namespace TextDisplay
                         var configFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///TextDisplay/screens.config"));
 
                         var xmlString = await FileIO.ReadTextAsync(configFile);
+
                         var xml = XElement.Parse(xmlString);
 
                         var screensConfig = xml.Descendants("Screen");
