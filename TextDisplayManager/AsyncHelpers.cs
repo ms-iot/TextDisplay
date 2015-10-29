@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace TextDisplay
+namespace Microsoft.Maker.Devices.TextDisplay
 {
     namespace AsyncHelpers
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.Foundation;
 
-namespace TextDisplay
+namespace Microsoft.Maker.Devices.TextDisplay
 {
     public interface ITextDisplay
     {

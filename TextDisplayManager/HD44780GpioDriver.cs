@@ -1,13 +1,14 @@
+
+using Microsoft.Maker.Devices.TextDisplay.AsyncHelpers;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using TextDisplay.AsyncHelpers;
 using Windows.Devices.Gpio;
 
-namespace TextDisplay
+namespace Microsoft.Maker.Devices.TextDisplay
 {
     class HD44780GpioDriver : TextDisplayBase
     {
