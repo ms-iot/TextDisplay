@@ -39,7 +39,7 @@ namespace Microsoft.Maker.Devices.TextDisplay
 
                             if (null != driverTypeAttribute)
                             {
-                                var type = Type.GetType("TextDisplay." + driverTypeAttribute.Value);
+                                var type = Type.GetType("Microsoft.Maker.Devices.TextDisplay." + driverTypeAttribute.Value);
                                 ITextDisplay driver = Activator.CreateInstance(type, screenConfig) as ITextDisplay;
                                 if (null != driver)
                                 {

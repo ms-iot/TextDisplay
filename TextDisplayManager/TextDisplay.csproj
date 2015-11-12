@@ -7,8 +7,8 @@
     <ProjectGuid>{060399D9-871D-4A17-A249-A12B9D3F7682}</ProjectGuid>
     <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TextDisplay</RootNamespace>
-    <AssemblyName>TextDisplay</AssemblyName>
+    <RootNamespace>Microsoft.Maker.Devices.TextDisplay</RootNamespace>
+    <AssemblyName>Microsoft.Maker.Devices.TextDisplay</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
