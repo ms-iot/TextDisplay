@@ -25,7 +25,7 @@ namespace Microsoft.Maker.Devices.TextDisplay
                     var folder = Windows.Storage.ApplicationData.Current.LocalSettings;
                     try
                     {
-                        var configFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///TextDisplay/screens.config"));
+                        var configFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Microsoft.Maker.Devices.TextDisplay/screens.config"));
 
                         var xmlString = await FileIO.ReadTextAsync(configFile);
 
