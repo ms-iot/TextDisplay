@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -9,27 +10,16 @@ namespace Microsoft.Maker.Devices.TextDisplay
 {
     internal partial class TextDisplayBase : ITextDisplay
     {
-        private XElement configFragment;
+        private TextDisplayConfig config;
         private string currentMessage;
         private string tempMessage;
         private ThreadPoolTimer tempTimer;
 
-        protected TextDisplayBase(XElement configFragment)
+        protected TextDisplayBase(TextDisplayConfig config)
         {
-            this.configFragment = configFragment;
-            var commonConfigElement = this.configFragment.Descendants("CommonCofiguration").FirstOrDefault();
-            if (null != commonConfigElement)
-            {
-                var heightElement = commonConfigElement.Descendants("Height").FirstOrDefault();
-                var widthElement = commonConfigElement.Descendants("Width").FirstOrDefault();
-
-                if (null != heightElement &&
-                    null != widthElement)
-                {
-                    this.Height = Convert.ToUInt32(heightElement.Value);
-                    this.Width = Convert.ToUInt32(widthElement.Value);
-                }
-            }
+            this.config = config;
+            this.Height = this.config.Height;
+            this.Width = this.config.Width;
         }
 
         public uint Height
@@ -64,13 +54,12 @@ namespace Microsoft.Maker.Devices.TextDisplay
         {
             return Task.Run(async () =>
             {
-                var driverConfigElement = this.configFragment.Descendants("DriverConiguration").FirstOrDefault();
-                await this.InitializeInternal(driverConfigElement);
+                await this.InitializeInternal(this.config.DriverConfigurationValues);
             }).AsAsyncAction();
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        protected virtual async Task InitializeInternal(XElement configFragment) { }
+        protected virtual async Task InitializeInternal(IDictionary<string, string> driverConfigurationValues) { }
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
         public IAsyncAction WriteMessageAsync(string message, uint timeout)
