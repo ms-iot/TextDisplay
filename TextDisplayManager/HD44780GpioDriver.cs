@@ -1,6 +1,7 @@
 
 using Microsoft.Maker.Devices.TextDisplay.AsyncHelpers;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -37,60 +38,48 @@ namespace Microsoft.Maker.Devices.TextDisplay
 
         private readonly AsyncSemaphore lcdLock = new AsyncSemaphore(1);
 
-        public HD44780GpioDriver(XElement configFragment) :
-            base(configFragment)
+        public HD44780GpioDriver(TextDisplayConfig config) :
+            base(config)
         {
+            this.gpio = GpioController.GetDefault();
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        protected override async Task InitializeInternal(XElement configFragment)
+        protected override async Task InitializeInternal(IDictionary<string, string> driverConfigurationValues)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            this.gpio = GpioController.GetDefault();
-
             if (null == this.gpio)
                 throw new NullReferenceException();
-
-            var rsPinElement = configFragment.Descendants("RsPin").FirstOrDefault();
-            var enablePinElement = configFragment.Descendants("EnablePin").FirstOrDefault();
-            var d0PinElement = configFragment.Descendants("D0Pin").FirstOrDefault();
-            var d1PinElement = configFragment.Descendants("D1Pin").FirstOrDefault();
-            var d2PinElement = configFragment.Descendants("D2Pin").FirstOrDefault();
-            var d3PinElement = configFragment.Descendants("D3Pin").FirstOrDefault();
-            var d4PinElement = configFragment.Descendants("D4Pin").FirstOrDefault();
-            var d5PinElement = configFragment.Descendants("D5Pin").FirstOrDefault();
-            var d6PinElement = configFragment.Descendants("D6Pin").FirstOrDefault();
-            var d7PinElement = configFragment.Descendants("D7Pin").FirstOrDefault();
 
             try
             {
                 int[] dataPinNumbers = null;
 
-                if (null != rsPinElement &&
-                null != enablePinElement &&
-                null != d4PinElement &&
-                null != d5PinElement &&
-                null != d6PinElement &&
-                null != d7PinElement)
+                if (driverConfigurationValues.ContainsKey("RsPin") &&
+                driverConfigurationValues.ContainsKey("EnablePin") &&
+                driverConfigurationValues.ContainsKey("D4Pin") &&
+                driverConfigurationValues.ContainsKey("D5Pin") &&
+                driverConfigurationValues.ContainsKey("D6Pin") &&
+                driverConfigurationValues.ContainsKey("D7Pin"))
                 {
-                    int rsPin = Convert.ToInt32(rsPinElement.Value);
-                    int enablePin = Convert.ToInt32(enablePinElement.Value);
-                    int d4Pin = Convert.ToInt32(d4PinElement.Value);
-                    int d5Pin = Convert.ToInt32(d5PinElement.Value);
-                    int d6Pin = Convert.ToInt32(d6PinElement.Value);
-                    int d7Pin = Convert.ToInt32(d7PinElement.Value);
+                    int rsPin = Convert.ToInt32(driverConfigurationValues["RsPin"]);
+                    int enablePin = Convert.ToInt32(driverConfigurationValues["EnablePin"]);
+                    int d4Pin = Convert.ToInt32(driverConfigurationValues["D4Pin"]);
+                    int d5Pin = Convert.ToInt32(driverConfigurationValues["D5Pin"]);
+                    int d6Pin = Convert.ToInt32(driverConfigurationValues["D6Pin"]);
+                    int d7Pin = Convert.ToInt32(driverConfigurationValues["D7Pin"]);
 
-                    if (null != d0PinElement &&
-                    null != d1PinElement &&
-                    null != d2PinElement &&
-                    null != d3PinElement)
+                    if (driverConfigurationValues.ContainsKey("D0Pin") &&
+                    driverConfigurationValues.ContainsKey("D1Pin") &&
+                    driverConfigurationValues.ContainsKey("D2Pin") &&
+                    driverConfigurationValues.ContainsKey("D3Pin"))
                     {
                         dataPinNumbers = new int[8];
 
-                        int d0Pin = Convert.ToInt32(d0PinElement.Value);
-                        int d1Pin = Convert.ToInt32(d1PinElement.Value);
-                        int d2Pin = Convert.ToInt32(d2PinElement.Value);
-                        int d3Pin = Convert.ToInt32(d3PinElement.Value);
+                        int d0Pin = Convert.ToInt32(driverConfigurationValues["D0Pin"]);
+                        int d1Pin = Convert.ToInt32(driverConfigurationValues["D1Pin"]);
+                        int d2Pin = Convert.ToInt32(driverConfigurationValues["D2Pin"]);
+                        int d3Pin = Convert.ToInt32(driverConfigurationValues["D3Pin"]);
 
                         dataPinNumbers[0] = d0Pin;
                         dataPinNumbers[1] = d1Pin;
