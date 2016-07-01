@@ -1,6 +1,9 @@
 # TextDisplay
 a text display driver framework
 
+This project has adopted the [Microsoft Open Source Code of Conduct](http://microsoft.github.io/codeofconduct). For more information see the [Code of Conduct FAQ](http://microsoft.github.io/codeofconduct/faq.md) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+
 Supported Displays:
 	HD44780 powered display (4Bit mode only) over GPIO - driverType="HD44780GpioDriver"
 
@@ -27,6 +30,7 @@ screens.config:
 	CommonConfiguration contians the Heigh and Width of the screen
 	DriverConfiguration contains a XML fragment that is passsed into the driver on initialization
 	Below is an example of a screens.config that has 1 HD44780GpioDriver driven screen:
+
 
 <?xml version="1.0" encoding="utf-8" ?>
 <Screens>
